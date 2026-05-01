@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://dy6b6bn170oc8"]
+
+[ext_resource type="PackedScene" uid="uid://d4cesphm5r01u" path="res://Scenes/player.tscn" id="1_8od7v"]
+[ext_resource type="Texture2D" uid="uid://ij31padrvvof" path="res://Assets/sheets/DinoSprites - doux.png" id="2_qc4db"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ys1qc"]
+atlas = ExtResource("2_qc4db")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_35xla"]
+atlas = ExtResource("2_qc4db")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3aeo"]
+atlas = ExtResource("2_qc4db")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5wyu1"]
+atlas = ExtResource("2_qc4db")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0c07c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ys1qc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_35xla")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3aeo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5wyu1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8od7v"]
+radius = 6.0
+height = 14.0
+
+[node name="Test" type="Node2D" unique_id=2043167903]
+
+[node name="Player" parent="." unique_id=249962390 instance=ExtResource("1_8od7v")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=996358399]
+position = Vector2(1, 4)
+sprite_frames = SubResource("SpriteFrames_0c07c")
+animation = &"idle"
+frame = 3
+frame_progress = 0.36891344
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1684658110]
+position = Vector2(1, 4)
+shape = SubResource("CapsuleShape2D_8od7v")
