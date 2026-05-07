@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Godot Project"
-run/main_scene="uid://bmxmc11p7f6jn"
+run/main_scene="uid://d4cesphm5r01u"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://Assets/icon.svg"
 
