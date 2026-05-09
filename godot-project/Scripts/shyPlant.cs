@@ -5,11 +5,12 @@ using System.Threading;
 public partial class shyPlant : CharacterBody2D
 {
 	public char cardinalDirection;
-	private const float walkSpeed = 40;
+	private const float walkSpeed = 20;
 	private const float runSpeed = 200;
 	private Boolean playerInRange = false;
 	private Boolean isFleeing = false;
-	private Boolean isWalking = false;
+    private Random r = new Random();
+    Godot.Timer randMovementTimer;
     private void body_entered(Node2D body) // Method heater written by AI because even though I told it not to show me code it still did.
 	{
 		if (body is Player) // == and .equals don't work in C#
@@ -25,32 +26,34 @@ public partial class shyPlant : CharacterBody2D
 		}
 	}
 
-	private void on_timer_timeout()
+	private async void on_timer_timeout()
 	{
-        setWalkVelocity();
-        GetTree().CreateTimer(2);
-        Random r = new Random();
-        Timer.Start(r.Next(1, 7));
+        if (!isFleeing)
+        {
+            setRandomDirection();
+            setWalkVelocity();
+            Velocity *= walkSpeed;
+            await ToSignal(GetTree().CreateTimer(2), "timeout"); // ToSignal converts to be awaitable, needs the timer object and the name of the timer object's signal that it's done, name must be exact
+            Velocity = Vector2.Zero;
+            randMovementTimer.Start((float)r.Next(1, 7));
+        }
 	}
 
     public override void _Ready()
     {
-		setRandomDirection(); // C# doesn't let you write just method name
+		// C# doesn't let you write just method name
+        randMovementTimer = GetNode<Godot.Timer>("Timer"); // thing in <> is the class type, thing in "" is the node name,
+        // must be done after the plant is created
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta) // Apparently if statements have to be in methods
 	{
-		if (!playerInRange)
-		{
-			Velocity *= runSpeed;
-		}
 		MoveAndSlide();
 	}
 
     private void setRandomDirection()
     {
-        Random r = new Random();
         int i = r.Next(0, 4); // inclusive and exclusive
         if (i == 0)
         {
