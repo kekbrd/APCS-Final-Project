@@ -159,5 +159,9 @@ collision_mask = 6
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D" unique_id=887934511]
 shape = SubResource("CircleShape2D_5woow")
 
+[node name="Timer" type="Timer" parent="CharacterBody2D" unique_id=192984460]
+autostart = true
+
 [connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="body_entered"]
 [connection signal="body_exited" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="body_exited"]
+[connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="on_timer_timeout"]
