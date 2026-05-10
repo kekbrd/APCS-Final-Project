@@ -8,10 +8,13 @@ public partial class shyPlant : CharacterBody2D
 	private const float walkSpeed = 20;
 	private const float runSpeed = 200;
 	private Boolean playerInRange = false;
-	private Boolean isFleeing = false;
+	public Boolean isFleeing = false;
+    public Boolean isAlert = false;
     private Random r = new Random();
-    Godot.Timer randMovementTimer;
-    private void body_entered(Node2D body) // Method heater written by AI because even though I told it not to show me code it still did.
+    private Godot.Timer idleTimer;
+    private Godot.Timer alertTimer;
+    private float alertTimerLength = 2;
+    private void body_entered(Node2D body) // Method header written by AI because even though I told it not to show me code it still did.
 	{
 		if (body is Player) // == and .equals don't work in C#
 		{
@@ -26,31 +29,55 @@ public partial class shyPlant : CharacterBody2D
 		}
 	}
 
-	private async void on_timer_timeout()
+	private async void idle_timer_timeout() // separate from main loop so that it can be interrupted
 	{
-        if (!isFleeing)
+        if (isIdle())
         {
             setRandomDirection();
             setWalkVelocity();
             Velocity *= walkSpeed;
-            await ToSignal(GetTree().CreateTimer(2), "timeout"); // ToSignal converts to be awaitable, needs the timer object and the name of the timer object's signal that it's done, name must be exact
-            Velocity = Vector2.Zero;
-            randMovementTimer.Start((float)r.Next(1, 7));
+            await ToSignal(GetTree().CreateTimer(2), "timeout"); /* ToSignal converts to be awaitable, needs the timer object and the name of the 
+                                                                  * timer object's signal that it's done, name must be exact hahaa lost 2 hours on that */
+            if (isIdle()) // avoid resetting velocity at inappropriate times
+            {
+                Velocity = Vector2.Zero;
+                idleTimer.Start((float)r.Next(1, 5));
+            }
         }
 	}
+
+    private void alert_timer_timeout()
+    {
+        isFleeing = true;
+        isAlert = false;
+        setWalkVelocity(); // for testing
+        Velocity *= runSpeed; 
+    }
 
     public override void _Ready()
     {
 		// C# doesn't let you write just method name
-        randMovementTimer = GetNode<Godot.Timer>("Timer"); // thing in <> is the class type, thing in "" is the node name,
-        // must be done after the plant is created
+        idleTimer = GetNode<Godot.Timer>("IdleTimer"); // thing in <> is the class type, thing in "" is the node name,
+                                                       // must be done after the plant is created
+        alertTimer = GetNode<Godot.Timer>("AlertTimer");
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _PhysicsProcess(double delta) // Apparently if statements have to be in methods
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _PhysicsProcess(double delta) // Apparently if statements have to be in methods
 	{
+        if (isIdle() && playerInRange)
+        {
+            isAlert = true;
+            Velocity = Vector2.Zero;
+            alertTimer.Start(alertTimerLength);
+        }
 		MoveAndSlide();
 	}
+
+    public Boolean isIdle()
+    {
+        return !isFleeing && !isAlert;
+    }
 
     private void setRandomDirection()
     {
