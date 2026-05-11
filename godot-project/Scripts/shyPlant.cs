@@ -37,7 +37,7 @@ public partial class shyPlant : CharacterBody2D
             setWalkVelocity();
             Velocity *= walkSpeed;
             await ToSignal(GetTree().CreateTimer(2), "timeout"); /* ToSignal converts to be awaitable, needs the timer object and the name of the 
-                                                                  * timer object's signal that it's done, name must be exact hahaa lost 2 hours on that */
+            timer object's signal that it's done, name must be exact hahaa lost 2 hours on that */
             if (isIdle()) // avoid resetting velocity at inappropriate times
             {
                 Velocity = Vector2.Zero;
@@ -50,7 +50,7 @@ public partial class shyPlant : CharacterBody2D
     {
         isFleeing = true;
         isAlert = false;
-        setWalkVelocity(); // for testing
+        setWalkVelocity(); // unable to get player position
         Velocity *= runSpeed; 
     }
 

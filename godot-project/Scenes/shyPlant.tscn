@@ -162,6 +162,7 @@ shape = SubResource("CircleShape2D_5woow")
 [node name="AlertTimer" type="Timer" parent="CharacterBody2D" unique_id=92000253]
 
 [node name="IdleTimer" type="Timer" parent="CharacterBody2D" unique_id=192984460]
+wait_time = 2.0
 autostart = true
 
 [connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="body_entered"]
