@@ -581,7 +581,8 @@ collision_mask = 6
 script = ExtResource("1_cuedo")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1715505979]
-position = Vector2(0, -8)
+position = Vector2(0, -12.000001)
+scale = Vector2(1.25, 1.2421875)
 sprite_frames = SubResource("SpriteFrames_r7iwo")
 animation = &"run_down"
 frame_progress = 0.20081757
@@ -591,6 +592,7 @@ collision_layer = 0
 collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=887934511]
+position = Vector2(0, -9)
 shape = SubResource("CircleShape2D_5woow")
 
 [node name="AlertTimer" type="Timer" parent="." unique_id=92000253]

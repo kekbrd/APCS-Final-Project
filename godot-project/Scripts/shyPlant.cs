@@ -13,7 +13,7 @@ public partial class shyPlant : CharacterBody2D
     private Random r = new Random();
     private Godot.Timer idleTimer;
     private Godot.Timer alertTimer;
-    private float alertTimerLength = 2;
+    private float alertTimerLength = 1.5f;
     private Player player;
     private AnimatedSprite2D sprite;
     

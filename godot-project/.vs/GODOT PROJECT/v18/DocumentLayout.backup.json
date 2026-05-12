@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{47BD4164-224B-457F-A71A-87F9A7C70118}|Godot Project.csproj|c:\\users\\msang\\onedrive\\documents\\apcs final project\\godot-project\\scripts\\shyplant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{47BD4164-224B-457F-A71A-87F9A7C70118}|Godot Project.csproj|solutionrelative:scripts\\shyplant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47BD4164-224B-457F-A71A-87F9A7C70118}|Godot Project.csproj|c:\\users\\msang\\onedrive\\documents\\apcs final project\\godot-project\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47BD4164-224B-457F-A71A-87F9A7C70118}|Godot Project.csproj|solutionrelative:scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +18,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Player.cs",
+              "DocumentMoniker": "C:\\Users\\msang\\OneDrive\\Documents\\APCS Final Project\\godot-project\\Scripts\\Player.cs",
+              "RelativeDocumentMoniker": "Scripts\\Player.cs",
+              "ToolTip": "C:\\Users\\msang\\OneDrive\\Documents\\APCS Final Project\\godot-project\\Scripts\\Player.cs",
+              "RelativeToolTip": "Scripts\\Player.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-10T21:32:35.411Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,7 +41,7 @@
               "RelativeDocumentMoniker": "Scripts\\shyPlant.cs",
               "ToolTip": "C:\\Users\\msang\\OneDrive\\Documents\\APCS Final Project\\godot-project\\Scripts\\shyPlant.cs",
               "RelativeToolTip": "Scripts\\shyPlant.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAgwC8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACwAAAAAAAAAAAAgwDkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-08T15:22:59.187Z",
               "EditorCaption": ""
