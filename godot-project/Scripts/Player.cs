@@ -4,13 +4,13 @@ using System.Runtime.ConstrainedExecution;
 
 public partial class Player : CharacterBody2D
 {
-	private const float speed = 50;
+	private const float speed = 500;
 	// Called when the node enters the scene tree for the first time.
 	
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta) // PhysicsProcess is used for movement, not Process.
 	{
-		Velocity = Vector2.Zero;
+		Velocity = Vector2.Zero; // Velocity is built in for characterbody, it's a Vector2 which has X and Y values
 		Velocity = Input.GetVector("move_left", "move_right", "move_up", "move_down") * speed; // Got this from AI. Up is negative y, down is positive.
 		MoveAndSlide();
 	}

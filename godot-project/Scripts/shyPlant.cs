@@ -14,6 +14,21 @@ public partial class shyPlant : CharacterBody2D
     private Godot.Timer idleTimer;
     private Godot.Timer alertTimer;
     private float alertTimerLength = 2;
+    private Player player;
+    private AnimatedSprite2D sprite;
+    
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _PhysicsProcess(double delta)
+	{
+        if (isIdle() && playerInRange)
+        {
+            isAlert = true;
+            Velocity = Vector2.Zero;
+            alertTimer.Start(alertTimerLength);
+        }
+		MoveAndSlide();
+	}
+    
     private void body_entered(Node2D body) // Method header written by AI because even though I told it not to show me code it still did.
 	{
 		if (body is Player) // == and .equals don't work in C#
@@ -36,11 +51,13 @@ public partial class shyPlant : CharacterBody2D
             setRandomDirection();
             setWalkVelocity();
             Velocity *= walkSpeed;
+            setWalkAnimation();
             await ToSignal(GetTree().CreateTimer(2), "timeout"); /* ToSignal converts to be awaitable, needs the timer object and the name of the 
             timer object's signal that it's done, name must be exact hahaa lost 2 hours on that */
             if (isIdle()) // avoid resetting velocity at inappropriate times
             {
                 Velocity = Vector2.Zero;
+                setIdleAnimation();
                 idleTimer.Start((float)r.Next(1, 5));
             }
         }
@@ -50,8 +67,13 @@ public partial class shyPlant : CharacterBody2D
     {
         isFleeing = true;
         isAlert = false;
-        setWalkVelocity(); // unable to get player position
-        Velocity *= runSpeed; 
+        if (player != null) // idea from AI
+        {
+            Velocity = (GlobalPosition - player.GlobalPosition).Normalized(); // The AI forgot my directions to not show code when I asked it what the method was for normalizing, 
+            // I would've done the same thing myself but I'll cite it anyways because I saw it.
+            Velocity *= runSpeed;
+            setRunAnimation();
+        }
     }
 
     public override void _Ready()
@@ -60,19 +82,9 @@ public partial class shyPlant : CharacterBody2D
         idleTimer = GetNode<Godot.Timer>("IdleTimer"); // thing in <> is the class type, thing in "" is the node name,
                                                        // must be done after the plant is created
         alertTimer = GetNode<Godot.Timer>("AlertTimer");
+        sprite = GetNode<AnimatedSprite2D>("Sprite");
+        sprite.Play("idle_down");
     }
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _PhysicsProcess(double delta) // Apparently if statements have to be in methods
-	{
-        if (isIdle() && playerInRange)
-        {
-            isAlert = true;
-            Velocity = Vector2.Zero;
-            alertTimer.Start(alertTimerLength);
-        }
-		MoveAndSlide();
-	}
 
     public Boolean isIdle()
     {
@@ -118,5 +130,70 @@ public partial class shyPlant : CharacterBody2D
         {
             Velocity = new Vector2(-1, 0);
         }
+    }
+
+    private void setWalkAnimation()
+    {
+        if ((Velocity.Angle() < (-1 * Mathf.Pi / 4)) && (Velocity.Angle() > (-3 * Mathf.Pi / 4)))
+        {
+            sprite.Play("walk_up");
+        }
+        else if ((Velocity.Angle() <= (Mathf.Pi / 4)) && (Velocity.Angle() >= (-1 * Mathf.Pi / 4)))
+        {
+            sprite.Play("walk_right");
+        }
+        else if ((Velocity.Angle() > (Mathf.Pi / 4)) && (Velocity.Angle() < (3 * Mathf.Pi / 4)))
+        {
+            sprite.Play("walk_down");
+        }
+        else
+        {
+            sprite.Play("walk_left");
+        }
+    }
+
+    private void setRunAnimation() // Angles have positive clockwise, from 0 to pi, left is pi or -pi
+    {
+        if ((Velocity.Angle() < (-1 * Mathf.Pi / 4)) && (Velocity.Angle() > (-3 * Mathf.Pi / 4)))
+        {
+            sprite.Play("run_up");
+        }
+        else if ((Velocity.Angle() <= (Mathf.Pi / 4)) && (Velocity.Angle() >= (-1 * Mathf.Pi / 4)))
+        {
+            sprite.Play("run_right");
+        }
+        else if ((Velocity.Angle() > (Mathf.Pi / 4)) && (Velocity.Angle() < (3 * Mathf.Pi / 4)))
+        {
+            sprite.Play("run_down");
+        }
+        else
+        {
+            sprite.Play("run_left");
+        }
+    }
+
+    private void setIdleAnimation()
+    {
+        if (cardinalDirection == 'N')
+        {
+            sprite.Play("idle_up");
+        }
+        else if (cardinalDirection == 'E')
+        {
+            sprite.Play("idle_right");
+        }
+        else if (cardinalDirection == 'S')
+        {
+            sprite.Play("idle_down");
+        }
+        else
+        {
+            sprite.Play("idle_left");
+        }
+    }
+
+    public void setPlayer(Player n)
+    {
+        player = n;
     }
 }

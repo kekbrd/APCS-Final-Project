@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d4cesphm5r01u"]
 
 [ext_resource type="Script" uid="uid://0u6y7ftgiq1t" path="res://Scripts/Player.cs" id="1_cvnsp"]
-[ext_resource type="Texture2D" uid="uid://ij31padrvvof" path="res://Assets/sheets/DinoSprites - doux.png" id="1_v0iea"]
+[ext_resource type="Texture2D" uid="uid://ij31padrvvof" path="res://Assets/dino_sprite_sheets/DinoSprites - doux.png" id="1_v0iea"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ys1qc"]
 atlas = ExtResource("1_v0iea")
