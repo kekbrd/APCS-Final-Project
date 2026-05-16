@@ -4,7 +4,9 @@
 [ext_resource type="Script" uid="uid://bkly05i06gbga" path="res://Scripts/Level.cs" id="1_wqkje"]
 [ext_resource type="PackedScene" uid="uid://d4cesphm5r01u" path="res://Scenes/player.tscn" id="2_6phgx"]
 [ext_resource type="PackedScene" uid="uid://bgpsogxia776l" path="res://Scenes/shyPlant.tscn" id="2_81xng"]
-[ext_resource type="PackedScene" uid="uid://bpulrvyt2gnw4" path="res://Scenes/smallSnowTree.tscn" id="3_81xng"]
+[ext_resource type="PackedScene" uid="uid://bpulrvyt2gnw4" path="res://Scenes/smallTree.tscn" id="3_81xng"]
+[ext_resource type="PackedScene" uid="uid://cybkpewl303b1" path="res://Scenes/mediumTree.tscn" id="6_0f350"]
+[ext_resource type="PackedScene" uid="uid://ni25semtra4g" path="res://Scenes/big_tree.tscn" id="7_8c0lf"]
 
 [node name="Level" type="Node2D" unique_id=1367735834]
 y_sort_enabled = true
@@ -28,3 +30,9 @@ position = Vector2(24, 96)
 
 [node name="Plant1" parent="." unique_id=296617680 instance=ExtResource("2_81xng")]
 position = Vector2(232, 216)
+
+[node name="bigTree" parent="." unique_id=611223556 instance=ExtResource("6_0f350")]
+position = Vector2(51, 183)
+
+[node name="bigTree2" parent="." unique_id=922223190 instance=ExtResource("7_8c0lf")]
+position = Vector2(147, 124)

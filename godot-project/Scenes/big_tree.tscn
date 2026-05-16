@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://ni25semtra4g"]
+
+[ext_resource type="Texture2D" uid="uid://jacc3h6wqico" path="res://Assets/PNG/Objects.png" id="1_xg0c3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e6aqp"]
+
+[node name="bigTree" type="Node2D" unique_id=922223190]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1492877915]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1414250988]
+position = Vector2(1, -7)
+shape = SubResource("CapsuleShape2D_e6aqp")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1805342491]
+position = Vector2(3, -52)
+texture = ExtResource("1_xg0c3")
+region_enabled = true
+region_rect = Rect2(662, 1, 109, 97)
+
+[node name="Sprite2D2" type="Sprite2D" parent="StaticBody2D" unique_id=1164775185]
+position = Vector2(-1, 11)
+texture = ExtResource("1_xg0c3")
+region_enabled = true
+region_rect = Rect2(566, 98, 69, 30)
