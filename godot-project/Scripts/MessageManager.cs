@@ -31,7 +31,7 @@ public partial class MessageManager : CanvasLayer
 		Instance = this;
 	}
 
-	public static void PlayText(params string[] payload) // 
+	public static void PlayText(params string[] payload) 
 	{
 		if (IsReading() || payload.Length == 0) 
 		{

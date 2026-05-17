@@ -36,14 +36,13 @@ public partial class shyPlant : CharacterBody2D
 		{
 			playerInRange = true;
 		}
-        if (body is shyPlant)
+        if (body.IsInGroup("preySpecies"))
         {
             shyPlant plant = (shyPlant)body;
-            if (plant.getIsFleeing())
+            if (plant.getIsFleeing() && isIdle())
             {
                 isSecondaryFleeing = true;
                 secondaryFleeVelocity = plant.Velocity.Normalized();
-                GD.Print(secondaryFleeVelocity);
                 startFleeSequence();
             }
         }
@@ -61,7 +60,6 @@ public partial class shyPlant : CharacterBody2D
             {
                 isSecondaryFleeing = true;
                 secondaryFleeVelocity = plant.Velocity.Normalized();
-                GD.Print(secondaryFleeVelocity);
                 startFleeSequence();
             }
         }
@@ -110,6 +108,7 @@ public partial class shyPlant : CharacterBody2D
                                                        // must be done after the plant is created
         alertTimer = GetNode<Godot.Timer>("AlertTimer");
         sprite = GetNode<AnimatedSprite2D>("Sprite");
+        AddToGroup("preySpecies");
         sprite.Play("idle_down");
         player = GetTree().GetFirstNodeInGroup("player") as Player; // gets reference of player from group tab
     }
