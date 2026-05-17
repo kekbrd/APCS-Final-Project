@@ -4,16 +4,18 @@ using System.Threading;
 
 public partial class shyPlant : CharacterBody2D
 {
-	public char cardinalDirection;
+	private char cardinalDirection;
 	private const float walkSpeed = 20;
 	private const float runSpeed = 200;
 	private Boolean playerInRange = false;
-	public Boolean isFleeing = false;
-    public Boolean isAlert = false;
+	private Boolean isFleeing = false;
+    private Boolean isSecondaryFleeing = false;
+    private Vector2 secondaryFleeVelocity;
+    private Boolean isAlert = false;
     private Random r = new Random();
     private Godot.Timer idleTimer;
     private Godot.Timer alertTimer;
-    private float alertTimerLength = 1.5f;
+    private float alertTimerLength = 1;
     private Player player;
     private AnimatedSprite2D sprite;
     
@@ -22,19 +24,29 @@ public partial class shyPlant : CharacterBody2D
 	{
         if (isIdle() && playerInRange)
         {
-            isAlert = true;
-            Velocity = Vector2.Zero;
-            alertTimer.Start(alertTimerLength);
+            startFleeSequence();
         }
 		MoveAndSlide();
 	}
     
+    // area detects collisionAreas
     private void body_entered(Node2D body) // Method header written by AI because even though I told it not to show me code it still did.
 	{
 		if (body is Player) // == and .equals don't work in C#
 		{
 			playerInRange = true;
 		}
+        if (body is shyPlant)
+        {
+            shyPlant plant = (shyPlant)body;
+            if (plant.getIsFleeing())
+            {
+                isSecondaryFleeing = true;
+                secondaryFleeVelocity = plant.Velocity.Normalized();
+                GD.Print(secondaryFleeVelocity);
+                startFleeSequence();
+            }
+        }
 	}
 	private void body_exited(Node2D body)
 	{
@@ -42,6 +54,17 @@ public partial class shyPlant : CharacterBody2D
 		{
 			playerInRange = false;
 		}
+        if (body is shyPlant)
+        {
+            shyPlant plant = (shyPlant)body;
+            if (plant.getIsFleeing() && isIdle())
+            {
+                isSecondaryFleeing = true;
+                secondaryFleeVelocity = plant.Velocity.Normalized();
+                GD.Print(secondaryFleeVelocity);
+                startFleeSequence();
+            }
+        }
 	}
 
 	private async void idle_timer_timeout() // separate from main loop so that it can be interrupted
@@ -49,9 +72,7 @@ public partial class shyPlant : CharacterBody2D
         if (isIdle())
         {
             setRandomDirection();
-            setWalkVelocity();
-            Velocity *= walkSpeed;
-            setWalkAnimation();
+            startWalking();
             await ToSignal(GetTree().CreateTimer(2), "timeout"); /* ToSignal converts to be awaitable, needs the timer object and the name of the 
             timer object's signal that it's done, name must be exact hahaa lost 2 hours on that */
             if (isIdle()) // avoid resetting velocity at inappropriate times
@@ -67,10 +88,16 @@ public partial class shyPlant : CharacterBody2D
     {
         isFleeing = true;
         isAlert = false;
-        if (player != null) // idea from AI
+        if (player != null && !isSecondaryFleeing) // idea of null check from AI
         {
             Velocity = (GlobalPosition - player.GlobalPosition).Normalized(); // The AI forgot my directions to not show code when I asked it what the method was for normalizing, 
             // I would've done the same thing myself but I'll cite it anyways because I saw it.
+            Velocity *= runSpeed;
+            setRunAnimation();
+        }
+        else if (player != null && isSecondaryFleeing)
+        {
+            Velocity = secondaryFleeVelocity;
             Velocity *= runSpeed;
             setRunAnimation();
         }
@@ -84,11 +111,12 @@ public partial class shyPlant : CharacterBody2D
         alertTimer = GetNode<Godot.Timer>("AlertTimer");
         sprite = GetNode<AnimatedSprite2D>("Sprite");
         sprite.Play("idle_down");
+        player = GetTree().GetFirstNodeInGroup("player") as Player; // gets reference of player from group tab
     }
 
     public Boolean isIdle()
     {
-        return !isFleeing && !isAlert;
+        return !isFleeing && !isAlert && !isSecondaryFleeing;
     }
 
     private void setRandomDirection()
@@ -110,6 +138,13 @@ public partial class shyPlant : CharacterBody2D
         {
             cardinalDirection = 'W';
         }
+    }
+
+    private void startWalking()
+    {
+        setWalkVelocity();
+        Velocity *= walkSpeed;
+        setWalkAnimation();
     }
 
 	private void setWalkVelocity()
@@ -192,8 +227,25 @@ public partial class shyPlant : CharacterBody2D
         }
     }
 
-    public void setPlayer(Player n)
+    private void startFleeSequence()
     {
-        player = n;
+        isAlert = true;
+        Velocity = Vector2.Zero;
+        alertTimer.Start(alertTimerLength);
+    }
+
+    public char getCardinalDirection()
+    {
+        return cardinalDirection;
+    }
+
+    public bool getIsFleeing()
+    {
+        return isFleeing;
+    }
+
+    public bool getIsAlert()
+    {
+        return isAlert;
     }
 }

@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://degptymq1qpc4"]
+
+[ext_resource type="PackedScene" uid="uid://xgh7bwhkove3" path="res://Scenes/message_manager.tscn" id="1_oj352"]
+
+[node name="GameManager" type="Node" unique_id=1923315716]
+
+[node name="Control" type="Control" parent="." unique_id=384063299]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Control" unique_id=948023070]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="Control/SubViewportContainer" unique_id=667535646]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="MessageManager" parent="Control/SubViewportContainer/SubViewport" unique_id=923623458 instance=ExtResource("1_oj352")]

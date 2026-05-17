@@ -1,3 +1,4 @@
+using Game.UI;
 using Godot;
 using System;
 using System.Security;
@@ -11,11 +12,6 @@ public partial class Level : Node2D
 	{
 		player = GetNode<Player>("Player");
 		p1 = GetNode<shyPlant>("Plant1"); // The class is whatever the script name is, not node type
-		p1.setPlayer(player);
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+		MessageManager.PlayText("Hey!");	
 	}
 }

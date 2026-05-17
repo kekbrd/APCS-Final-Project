@@ -1,11 +1,12 @@
 using Godot;
 using System;
 using System.Runtime.ConstrainedExecution;
+using Game.UI;
 
 public partial class Player : CharacterBody2D
 {
-	private const float speed = 50;
-	public char cardinalDirection;
+	private const float speed = 150; // should be 50 normally, changed for testing
+	private char cardinalDirection;
     private AnimatedSprite2D sprite;
     private Vector2 prevVelocity = Vector2.Zero; 
     // Called when the node enters the scene tree for the first time.
@@ -15,7 +16,16 @@ public partial class Player : CharacterBody2D
         sprite = GetNode<AnimatedSprite2D>("Sprite");
     }
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _PhysicsProcess(double delta) // PhysicsProcess is used for movement, not Process.
+	
+    public override void _Input(InputEvent @event)
+    {
+        if (@event.IsActionReleased("take_photo"))
+        {
+            MessageManager.PlayText("Testingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
+        }
+    }
+
+    public override void _PhysicsProcess(double delta) // PhysicsProcess is used for movement, not Process.
 	{
         Velocity = Vector2.Zero; // Velocity is built in for characterbody, it's a Vector2 which has X and Y values
         Velocity = Input.GetVector("move_left", "move_right", "move_up", "move_down") * speed; // Got this from AI. Up is negative y, down is positive.
