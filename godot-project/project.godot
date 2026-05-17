@@ -15,10 +15,6 @@ run/main_scene="uid://bmxmc11p7f6jn"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://Assets/icon.svg"
 
-[autoload]
-
-Signals="*uid://clcoud7e8ri0d"
-
 [display]
 
 window/stretch/mode="canvas_items"
