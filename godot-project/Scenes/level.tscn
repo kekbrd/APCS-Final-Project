@@ -39,6 +39,3 @@ position = Vector2(51, 183)
 position = Vector2(147, 124)
 
 [node name="MessageManager" parent="." unique_id=923623458 instance=ExtResource("8_754fn")]
-
-[node name="Plant2" parent="." unique_id=2101706176 instance=ExtResource("2_81xng")]
-position = Vector2(48, 272)

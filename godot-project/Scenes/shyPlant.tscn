@@ -602,7 +602,6 @@ shape = SubResource("CircleShape2D_5woow")
 
 [node name="IdleTimer" type="Timer" parent="." unique_id=192984460]
 one_shot = true
-autostart = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1852744735]
 position = Vector2(0, 2)

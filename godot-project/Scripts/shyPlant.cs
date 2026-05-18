@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Threading;
 
-public partial class shyPlant : CharacterBody2D
+public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
 {
 	private char cardinalDirection;
 	private const float walkSpeed = 20;
@@ -18,6 +18,7 @@ public partial class shyPlant : CharacterBody2D
     private float alertTimerLength = 1;
     private Player player;
     private AnimatedSprite2D sprite;
+    public const float shyPlantDetectionRadius = 115.73f;
     
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)
@@ -25,6 +26,10 @@ public partial class shyPlant : CharacterBody2D
         if (isIdle() && playerInRange)
         {
             startFleeSequence();
+        }
+        if (isFleeing)
+        {
+            cardinalDirection = 'Z';
         }
 		MoveAndSlide();
 	}
@@ -77,7 +82,7 @@ public partial class shyPlant : CharacterBody2D
             {
                 Velocity = Vector2.Zero;
                 setIdleAnimation();
-                idleTimer.Start((float)r.Next(1, 5));
+                idleTimer.Start(r.Next(1, 5));
             }
         }
 	}
@@ -109,7 +114,9 @@ public partial class shyPlant : CharacterBody2D
         alertTimer = GetNode<Godot.Timer>("AlertTimer");
         sprite = GetNode<AnimatedSprite2D>("Sprite");
         AddToGroup("preySpecies");
+        AddToGroup("shyPlantGroup");
         sprite.Play("idle_down");
+        idleTimer.Start(r.Next(1, 5));
         player = GetTree().GetFirstNodeInGroup("player") as Player; // gets reference of player from group tab
     }
 

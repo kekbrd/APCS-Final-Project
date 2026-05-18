@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Runtime.ConstrainedExecution;
 using Game.UI;
+using System.Text.RegularExpressions;
 
 public partial class Player : CharacterBody2D
 {
@@ -9,11 +10,16 @@ public partial class Player : CharacterBody2D
 	private char cardinalDirection;
     private AnimatedSprite2D sprite;
     private Vector2 prevVelocity = Vector2.Zero; 
+    private Boolean hasPhoto = false;
+    private String targetSpeciesGroup;
+    private float photoRange;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
 		cardinalDirection = 'S';
         sprite = GetNode<AnimatedSprite2D>("Sprite");
+        photoRange = shyPlant.shyPlantDetectionRadius + 40;
     }
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	
@@ -21,7 +27,29 @@ public partial class Player : CharacterBody2D
     {
         if (@event.IsActionReleased("take_photo"))
         {
-            MessageManager.PlayText("Testingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
+            Node2D closest = closestNode2DInGroup(targetSpeciesGroup);
+
+            if (hasPhoto)
+            {
+                MessageManager.PlayText("You've already taken a good picture. Return to the car before you get mauled, please.");
+            }
+            else if (GlobalPosition.DistanceTo(closest.GlobalPosition) > photoRange + 100)
+            {
+                MessageManager.PlayText("You're too far away from the target. The boss has pretty bad vision, but I don't think we can pass off that tree as the target.");
+            }
+            else if (GlobalPosition.DistanceTo(closest.GlobalPosition) > photoRange)
+            {
+                MessageManager.PlayText("Get a little closer, we need more detail.");
+            }
+            else if (!correctAngleForPhoto(closest))
+            {
+                MessageManager.PlayText("Come on, pick a more flattering angle.");
+            }
+            else
+            {
+                //hasPhoto = true;
+                MessageManager.PlayText("Nice! Got the photo.");
+            }
         }
     }
 
@@ -44,6 +72,46 @@ public partial class Player : CharacterBody2D
         prevVelocity = Velocity;
         MoveAndSlide();
 	}
+
+    private bool correctAngleForPhoto(Node2D n)
+    {
+        IHasCardinalDirection target = (IHasCardinalDirection)n;
+        float angle = n.GlobalPosition.AngleTo(GlobalPosition);
+        if (target.getCardinalDirection() == 'E') 
+        {
+            return angle > (-3 * Mathf.Pi / 4) && angle < (3 * Mathf.Pi / 4);
+        }
+        else if (target.getCardinalDirection() == 'S')
+        {
+            return angle > (-1 * Mathf.Pi / 4) || angle < (-3 * Mathf.Pi / 4);
+        }
+        else if (target.getCardinalDirection() == 'W')
+        {
+            return angle < (-1 * Mathf.Pi / 4) || angle > Mathf.Pi / 4;
+        }
+        else if (target.getCardinalDirection() == 'N')
+        {
+            return angle < Mathf.Pi / 4 || angle > 3 * Mathf.Pi / 4;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private Node2D closestNode2DInGroup(String group)
+    {
+        Node2D result = (Node2D)GetTree().GetFirstNodeInGroup(group); // Nodes don't have global position, but Node2D does
+        foreach (Node raw in GetTree().GetNodesInGroup(group)) // c# for each loops look like this apparently
+        {
+            Node2D n = (Node2D)raw;
+            if (GlobalPosition.DistanceTo(n.GlobalPosition) < GlobalPosition.DistanceTo(result.GlobalPosition))
+            {
+                result = n;
+            }
+        }
+        return result;
+    }
 
     private void updateCardinalDirection()
     {
@@ -106,5 +174,10 @@ public partial class Player : CharacterBody2D
         {
             sprite.Play("idle_left");
         }
+    }
+
+    public void setTargetSpecies(String g)
+    {
+        targetSpeciesGroup = g;
     }
 }

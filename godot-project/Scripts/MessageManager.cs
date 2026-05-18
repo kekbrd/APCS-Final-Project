@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Game.UI; // Almost everything in here is from tutorial: https://www.youtube.com/watch?v=Mrmu_06GYcs&list=PLdSnLYEzOTtqegR6BJAooonhOvg4Am8d_&index=7
 public partial class MessageManager : CanvasLayer
 {
-	public static MessageManager Instance {get; private set;} // makes private Instance and makes accessor method
+	public static MessageManager Instance {get; private set;} // makes private Instance and makes accessor method but no mutator
 	
 	[ExportCategory("Components")] 
 	[Export]
@@ -44,7 +44,7 @@ public partial class MessageManager : CanvasLayer
 
     public override void _Input(InputEvent @event) // I did this method myself
 	{
-		if (@event.IsActionReleased("dismiss_message"))
+		if (@event.IsActionReleased("dismiss_message") || @event.IsActionReleased("take_photo"))
 		{
 			if (textIsScrolling)
 			{
