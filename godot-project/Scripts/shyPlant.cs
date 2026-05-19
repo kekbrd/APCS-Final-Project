@@ -16,9 +16,12 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
     private Godot.Timer idleTimer;
     private Godot.Timer alertTimer;
     private float alertTimerLength = 1;
+    private float secondaryFleeTimerLength = 0.3f;
     private Player player;
     private AnimatedSprite2D sprite;
     public const float shyPlantDetectionRadius = 115.73f;
+    [Export]private Wind w;
+    private float widthOfWind = 3 / 8;
     
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)
@@ -26,10 +29,6 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
         if (isIdle() && playerInRange)
         {
             startFleeSequence();
-        }
-        if (isFleeing)
-        {
-            cardinalDirection = 'Z';
         }
 		MoveAndSlide();
 	}
@@ -47,6 +46,7 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
             if (plant.getIsFleeing() && isIdle())
             {
                 isSecondaryFleeing = true;
+                isAlert = true;
                 secondaryFleeVelocity = plant.Velocity.Normalized();
                 startFleeSequence();
             }
@@ -58,19 +58,29 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
 		{
 			playerInRange = false;
 		}
-        if (body is shyPlant)
+        if (body.IsInGroup("preySpecies"))
         {
             shyPlant plant = (shyPlant)body;
             if (plant.getIsFleeing() && isIdle())
             {
                 isSecondaryFleeing = true;
+                isAlert = true;
+                secondaryFleeTimerLength = 0; // compensate for knowing only when it exits
                 secondaryFleeVelocity = plant.Velocity.Normalized();
                 startFleeSequence();
             }
         }
 	}
 
-	private async void idle_timer_timeout() // separate from main loop so that it can be interrupted
+    private void on_olfactory_detection_body_entered(Node2D body)
+    {
+        if (body is Player && isUpwind(body))
+        {
+            playerInRange = true;
+        }
+    }
+
+    private async void idle_timer_timeout() // separate from main loop so that it can be interrupted
 	{
         if (isIdle())
         {
@@ -117,6 +127,7 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
         AddToGroup("shyPlantGroup");
         sprite.Play("idle_down");
         idleTimer.Start(r.Next(1, 5));
+        w = GetTree().GetFirstNodeInGroup("wind") as Wind;
         player = GetTree().GetFirstNodeInGroup("player") as Player; // gets reference of player from group tab
     }
 
@@ -144,6 +155,13 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
         {
             cardinalDirection = 'W';
         }
+    }
+
+    private bool isUpwind(Node raw)
+    {
+        Node2D n = (Node2D)raw;
+        float angleToPlayer = GlobalPosition.AngleToPoint(n.GlobalPosition);
+        return angleToPlayer > w.getWindDirection() - widthOfWind && angleToPlayer < w.getWindDirection() + widthOfWind;
     }
 
     private void startWalking()
@@ -237,11 +255,22 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
     {
         isAlert = true;
         Velocity = Vector2.Zero;
-        alertTimer.Start(alertTimerLength);
+        if (isSecondaryFleeing)
+        {
+            alertTimer.Start(secondaryFleeTimerLength);
+        }
+        else
+        {
+            alertTimer.Start(alertTimerLength);
+        }
     }
 
     public char getCardinalDirection()
     {
+        if (isFleeing)
+        {
+            return 'Z';
+        }
         return cardinalDirection;
     }
 

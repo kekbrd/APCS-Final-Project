@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\msang\\OneDrive\\Documents\\APCS Final Project\\godot-project\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{47BD4164-224B-457F-A71A-87F9A7C70118}|Godot Project.csproj|c:\\users\\msang\\onedrive\\documents\\apcs final project\\godot-project\\scripts\\shyplant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47BD4164-224B-457F-A71A-87F9A7C70118}|Godot Project.csproj|solutionrelative:scripts\\shyplant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F0987F1D-648E-4938-A923-730C6599D46C}|Godot Project.csproj|c:\\users\\msang\\onedrive\\documents\\apcs final project\\godot-project\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F0987F1D-648E-4938-A923-730C6599D46C}|Godot Project.csproj|solutionrelative:scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{47BD4164-224B-457F-A71A-87F9A7C70118}|Godot Project.csproj|c:\\users\\msang\\onedrive\\documents\\apcs final project\\godot-project\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47BD4164-224B-457F-A71A-87F9A7C70118}|Godot Project.csproj|solutionrelative:scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F0987F1D-648E-4938-A923-730C6599D46C}|Godot Project.csproj|c:\\users\\msang\\onedrive\\documents\\apcs final project\\godot-project\\scripts\\messagemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F0987F1D-648E-4938-A923-730C6599D46C}|Godot Project.csproj|solutionrelative:scripts\\messagemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0987F1D-648E-4938-A923-730C6599D46C}|Godot Project.csproj|c:\\users\\msang\\onedrive\\documents\\apcs final project\\godot-project\\scripts\\shyplant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F0987F1D-648E-4938-A923-730C6599D46C}|Godot Project.csproj|solutionrelative:scripts\\shyplant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0987F1D-648E-4938-A923-730C6599D46C}|Godot Project.csproj|c:\\users\\msang\\onedrive\\documents\\apcs final project\\godot-project\\scripts\\ihascardinaldirection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F0987F1D-648E-4938-A923-730C6599D46C}|Godot Project.csproj|solutionrelative:scripts\\ihascardinaldirection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,33 +26,55 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IHasCardinalDirection.cs",
+              "DocumentMoniker": "C:\\Users\\msang\\OneDrive\\Documents\\APCS Final Project\\godot-project\\Scripts\\IHasCardinalDirection.cs",
+              "RelativeDocumentMoniker": "Scripts\\IHasCardinalDirection.cs",
+              "ToolTip": "C:\\Users\\msang\\OneDrive\\Documents\\APCS Final Project\\godot-project\\Scripts\\IHasCardinalDirection.cs",
+              "RelativeToolTip": "Scripts\\IHasCardinalDirection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T18:12:02.226Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "MessageManager.cs",
+              "DocumentMoniker": "C:\\Users\\msang\\OneDrive\\Documents\\APCS Final Project\\godot-project\\Scripts\\MessageManager.cs",
+              "RelativeDocumentMoniker": "Scripts\\MessageManager.cs",
+              "ToolTip": "C:\\Users\\msang\\OneDrive\\Documents\\APCS Final Project\\godot-project\\Scripts\\MessageManager.cs",
+              "RelativeToolTip": "Scripts\\MessageManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T17:40:30.42Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "Player.cs",
               "DocumentMoniker": "C:\\Users\\msang\\OneDrive\\Documents\\APCS Final Project\\godot-project\\Scripts\\Player.cs",
               "RelativeDocumentMoniker": "Scripts\\Player.cs",
               "ToolTip": "C:\\Users\\msang\\OneDrive\\Documents\\APCS Final Project\\godot-project\\Scripts\\Player.cs",
               "RelativeToolTip": "Scripts\\Player.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-10T21:32:35.411Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-10T21:32:35.411Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "shyPlant.cs",
               "DocumentMoniker": "C:\\Users\\msang\\OneDrive\\Documents\\APCS Final Project\\godot-project\\Scripts\\shyPlant.cs",
               "RelativeDocumentMoniker": "Scripts\\shyPlant.cs",
               "ToolTip": "C:\\Users\\msang\\OneDrive\\Documents\\APCS Final Project\\godot-project\\Scripts\\shyPlant.cs",
               "RelativeToolTip": "Scripts\\shyPlant.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAgwDkAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-08T15:22:59.187Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-08T15:22:59.187Z"
             }
           ]
         }
