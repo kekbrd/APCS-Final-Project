@@ -19,7 +19,7 @@ public partial class Player : CharacterBody2D
     {
 		cardinalDirection = 'S';
         sprite = GetNode<AnimatedSprite2D>("Sprite");
-        photoRange = shyPlant.shyPlantDetectionRadius + 25f;
+        photoRange = shyPlant.shyPlantDetectionRadius + 40f;
     }
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	
