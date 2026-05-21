@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 public partial class Player : CharacterBody2D
 {
-	private const float speed = 150; // should be 50 normally, changed for testing
+	private const float speed = 200f; // should be 50 normally, changed for testing
 	private char cardinalDirection;
     private AnimatedSprite2D sprite;
     private Vector2 prevVelocity = Vector2.Zero; 
@@ -19,7 +19,7 @@ public partial class Player : CharacterBody2D
     {
 		cardinalDirection = 'S';
         sprite = GetNode<AnimatedSprite2D>("Sprite");
-        photoRange = shyPlant.shyPlantDetectionRadius + 40;
+        photoRange = shyPlant.shyPlantDetectionRadius + 25f;
     }
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	
@@ -33,22 +33,26 @@ public partial class Player : CharacterBody2D
             {
                 MessageManager.PlayText("You've already taken a good picture. Return to the car before you get mauled, please.");
             }
-            else if (GlobalPosition.DistanceTo(closest.GlobalPosition) > photoRange + 100)
+            else if (GlobalPosition.DistanceTo(closest.GlobalPosition) > photoRange + 100f)
             {
-                MessageManager.PlayText("You're too far away from the target. The boss has pretty bad vision, but I don't think we can pass off that tree as the target.");
+                MessageManager.PlayText("You're too far away from the target. The boss has pretty bad vision, but I don't think you can pass off that tree as the target.");
             }
             else if (GlobalPosition.DistanceTo(closest.GlobalPosition) > photoRange)
             {
                 MessageManager.PlayText("Get a little closer, we need more detail.");
             }
-            else if (!correctAngleForPhoto(closest))
+            else if (targetIsFleeing(closest))
             {
-                MessageManager.PlayText("Come on, pick a more flattering angle.");
+                MessageManager.PlayText("The photo is too blurry.");
+            }
+            else if (correctAngleForPhoto(closest))
+            {
+                hasPhoto = true;
+                MessageManager.PlayText("Nice! Got the photo.");
             }
             else
             {
-                //hasPhoto = true;
-                MessageManager.PlayText("Nice! Got the photo.");
+                MessageManager.PlayText("Come on, pick a more flattering angle.");
             }
         }
     }
@@ -73,23 +77,33 @@ public partial class Player : CharacterBody2D
         MoveAndSlide();
 	}
 
-    private bool correctAngleForPhoto(Node2D n)
+    private bool targetIsFleeing(Node2D n)
     {
         IHasCardinalDirection target = (IHasCardinalDirection)n;
-        float angle = n.GlobalPosition.AngleTo(GlobalPosition);
-        if (target.getCardinalDirection() == 'E') 
+        return target.getCardinalDirection() == 'Z';
+    }
+
+    private bool correctAngleForPhoto(Node2D n) // any angle other than the quadrant behind target is good
+    {
+        IHasCardinalDirection target = (IHasCardinalDirection)n;
+        char direction = target.getCardinalDirection();
+
+        Vector2 diff = GlobalPosition - n.GlobalPosition; // this group of 2 lines from AI, gets angle relative to target
+        float angle = Mathf.Atan2(diff.Y, diff.X);
+
+        if (direction == 'E') 
         {
             return angle > (-3 * Mathf.Pi / 4) && angle < (3 * Mathf.Pi / 4);
         }
-        else if (target.getCardinalDirection() == 'S')
+        else if (direction == 'S')
         {
             return angle > (-1 * Mathf.Pi / 4) || angle < (-3 * Mathf.Pi / 4);
         }
-        else if (target.getCardinalDirection() == 'W')
+        else if (direction == 'W')
         {
             return angle < (-1 * Mathf.Pi / 4) || angle > Mathf.Pi / 4;
         }
-        else if (target.getCardinalDirection() == 'N')
+        else if (direction == 'N')
         {
             return angle < Mathf.Pi / 4 || angle > 3 * Mathf.Pi / 4;
         }

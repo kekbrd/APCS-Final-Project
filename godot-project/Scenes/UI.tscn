@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://xgh7bwhkove3"]
+
+[ext_resource type="Texture2D" uid="uid://b6xc6vuh4cbqc" path="res://Assets/UI/message_box.png" id="1_m0180"]
+[ext_resource type="Script" uid="uid://6dw385kinwjm" path="res://Scripts/MessageManager.cs" id="1_tolam"]
+[ext_resource type="FontFile" uid="uid://c8wvwqsbq48u6" path="res://Assets/UI/pokemon-emerald.ttf" id="2_7jj17"]
+[ext_resource type="Texture2D" uid="uid://h66h3nbcebps" path="res://Assets/digital-camera-dslr.png" id="4_pvxr8"]
+[ext_resource type="Texture2D" uid="uid://bmn7ymtip88nh" path="res://Assets/wind/W401-1.png" id="5_tfa5v"]
+[ext_resource type="Texture2D" uid="uid://cv7tbwgbokhj6" path="res://Assets/wind/W401-2.png" id="6_g0pbe"]
+[ext_resource type="Texture2D" uid="uid://dro3mg6vhepl1" path="res://Assets/wind/W401-3.png" id="7_wbxxx"]
+[ext_resource type="Texture2D" uid="uid://dnbuxw8je1uia" path="res://Assets/wind/W401-4.png" id="8_cio7j"]
+[ext_resource type="Texture2D" uid="uid://ds7s3fadl3c2k" path="res://Assets/wind/W401-5.png" id="9_2s8lr"]
+[ext_resource type="Texture2D" uid="uid://d1vsl7j320la7" path="res://Assets/wind/W401-6.png" id="10_wknvq"]
+[ext_resource type="Texture2D" uid="uid://dcnad38mehdxd" path="res://Assets/wind/W401-7.png" id="11_qfswh"]
+[ext_resource type="Texture2D" uid="uid://bs80wu0ii538t" path="res://Assets/wind/W401-8.png" id="12_dsyyx"]
+[ext_resource type="Script" uid="uid://01u3gthym8aj" path="res://Scripts/Wind.cs" id="13_g0pbe"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t7u4y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_tfa5v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_g0pbe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wbxxx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_cio7j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2s8lr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_wknvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_qfswh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_dsyyx")
+}],
+"loop": true,
+"name": &"wind",
+"speed": 5.0
+}]
+
+[node name="UI" type="CanvasLayer" unique_id=923623458 node_paths=PackedStringArray("Box", "Label")]
+script = ExtResource("1_tolam")
+Box = NodePath("Control/NinePatchRect")
+Label = NodePath("Control/NinePatchRect/RichTextLabel")
+
+[node name="Control" type="Control" parent="." unique_id=1570826196]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Control" unique_id=75583405]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 104.0
+offset_top = 496.0
+offset_right = -640.0
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_m0180")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/NinePatchRect" unique_id=1783336523]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 16.0
+offset_right = 383.0
+offset_bottom = 80.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 2
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/normal_font = ExtResource("2_7jj17")
+theme_override_font_sizes/normal_font_size = 20
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="Control" unique_id=1070763491]
+layout_mode = 0
+offset_left = 1038.0
+offset_top = 544.0
+offset_right = 1144.0
+offset_bottom = 647.0
+texture = ExtResource("4_pvxr8")
+
+[node name="NinePatchRect3" type="NinePatchRect" parent="Control" unique_id=128994355]
+layout_mode = 0
+offset_left = 1083.0
+offset_top = 539.0
+offset_right = 1106.0
+offset_bottom = 563.0
+texture = ExtResource("1_m0180")
+region_rect = Rect2(0, 0, 232, 78)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/NinePatchRect3" unique_id=1301381151]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 3.0
+offset_right = 47.0
+offset_bottom = 43.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_7jj17")
+theme_override_font_sizes/normal_font_size = 20
+text = "P"
+
+[node name="NinePatchRect4" type="NinePatchRect" parent="Control" unique_id=532460804]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 37.0
+offset_right = 91.0
+offset_bottom = 97.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/NinePatchRect4" unique_id=1381031713 groups=["wind"]]
+position = Vector2(40, 29)
+scale = Vector2(0.23913577, 0.26184082)
+sprite_frames = SubResource("SpriteFrames_t7u4y")
+animation = &"wind"
+autoplay = "wind"
+frame_progress = 0.5410899
+script = ExtResource("13_g0pbe")

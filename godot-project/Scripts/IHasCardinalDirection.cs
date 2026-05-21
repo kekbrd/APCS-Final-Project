@@ -1,4 +1,4 @@
 	public interface IHasCardinalDirection // from AI
     {
-        char getCardinalDirection();
+        char getCardinalDirection(); // use 'Z' to show fleeing
     }

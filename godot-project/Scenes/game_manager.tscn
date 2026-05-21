@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://degptymq1qpc4"]
 
-[ext_resource type="PackedScene" uid="uid://xgh7bwhkove3" path="res://Scenes/message_manager.tscn" id="1_oj352"]
+[ext_resource type="PackedScene" uid="uid://xgh7bwhkove3" path="res://Scenes/UI.tscn" id="1_oj352"]
 
 [node name="GameManager" type="Node" unique_id=1923315716]
 

@@ -4,74 +4,100 @@ using System.Threading;
 
 public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
 {
-	private char cardinalDirection;
-	private const float walkSpeed = 20;
-	private const float runSpeed = 200;
-	private Boolean playerInRange = false;
-	private Boolean isFleeing = false;
+    private char cardinalDirection;
+    private const float walkSpeed = 20f;
+    private const float runSpeed = 200f;
+    private Boolean playerInRange = false;
+    private Boolean playerInOlfactoryRange = false;
+    private Node2D nodeInOlfactoryRange;
+    private Boolean isFleeing = false;
     private Boolean isSecondaryFleeing = false;
     private Vector2 secondaryFleeVelocity;
     private Boolean isAlert = false;
     private Random r = new Random();
     private Godot.Timer idleTimer;
     private Godot.Timer alertTimer;
-    private float alertTimerLength = 1;
+    private float alertTimerLength = 1f;
+    private float secondaryFleeTimerLength = 0.3f;
     private Player player;
     private AnimatedSprite2D sprite;
     public const float shyPlantDetectionRadius = 115.73f;
-    
+    private Wind w;
+    private float widthOfWind = 3f / 8f; // apparently everything defaults to int or double and you have to label all floats
+
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)
-	{
+    {
         if (isIdle() && playerInRange)
         {
             startFleeSequence();
         }
-        if (isFleeing)
+        if (playerInOlfactoryRange && nodeInOlfactoryRange != null && isIdle() && playerIsUpwind())
         {
-            cardinalDirection = 'Z';
+            startFleeSequence();
         }
-		MoveAndSlide();
-	}
-    
-    // area detects collisionAreas
+        MoveAndSlide();
+    }
+
+    // area detects collisionAreas only
     private void body_entered(Node2D body) // Method header written by AI because even though I told it not to show me code it still did.
-	{
-		if (body is Player) // == and .equals don't work in C#
-		{
-			playerInRange = true;
-		}
+    {
+        if (body is Player) // == and .equals don't work in C#
+        {
+            playerInRange = true;
+        }
         if (body.IsInGroup("preySpecies"))
         {
             shyPlant plant = (shyPlant)body;
             if (plant.getIsFleeing() && isIdle())
             {
                 isSecondaryFleeing = true;
+                isAlert = true;
                 secondaryFleeVelocity = plant.Velocity.Normalized();
                 startFleeSequence();
             }
         }
-	}
-	private void body_exited(Node2D body)
-	{
-		if (body is Player)
-		{
-			playerInRange = false;
-		}
-        if (body is shyPlant)
+    }
+    private void body_exited(Node2D body)
+    {
+        if (body is Player)
+        {
+            playerInRange = false;
+        }
+        if (body.IsInGroup("preySpecies"))
         {
             shyPlant plant = (shyPlant)body;
             if (plant.getIsFleeing() && isIdle())
             {
                 isSecondaryFleeing = true;
+                isAlert = true;
+                secondaryFleeTimerLength = 0; // compensate for knowing only when it exits
                 secondaryFleeVelocity = plant.Velocity.Normalized();
                 startFleeSequence();
             }
         }
-	}
+    }
 
-	private async void idle_timer_timeout() // separate from main loop so that it can be interrupted
-	{
+    private void on_olfactory_detection_body_entered(Node2D body)
+    {
+        if (body is Player)
+        {
+            playerInOlfactoryRange = true;
+            nodeInOlfactoryRange = body;
+        }
+    }
+
+    private void on_olfactory_detection_body_exited(Node2D body)
+    {
+        if (body is Player)
+        {
+            playerInOlfactoryRange = false;
+            nodeInOlfactoryRange = null;
+        }
+    }
+
+    private async void idle_timer_timeout() // separate from main loop so that it can be interrupted
+    {
         if (isIdle())
         {
             setRandomDirection();
@@ -85,7 +111,7 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
                 idleTimer.Start(r.Next(1, 5));
             }
         }
-	}
+    }
 
     private void alert_timer_timeout()
     {
@@ -108,7 +134,7 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
 
     public override void _Ready()
     {
-		// C# doesn't let you write just method name
+        // C# doesn't let you write just method name
         idleTimer = GetNode<Godot.Timer>("IdleTimer"); // thing in <> is the class type, thing in "" is the node name,
                                                        // must be done after the plant is created
         alertTimer = GetNode<Godot.Timer>("AlertTimer");
@@ -117,6 +143,7 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
         AddToGroup("shyPlantGroup");
         sprite.Play("idle_down");
         idleTimer.Start(r.Next(1, 5));
+        w = GetTree().GetFirstNodeInGroup("wind") as Wind;
         player = GetTree().GetFirstNodeInGroup("player") as Player; // gets reference of player from group tab
     }
 
@@ -146,6 +173,12 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
         }
     }
 
+    private bool playerIsUpwind() // angletopoint is not around radians, its the weird godot thing
+    {
+        float angleFromPlayer = nodeInOlfactoryRange.GlobalPosition.AngleToPoint(GlobalPosition);
+        return angleFromPlayer > w.getWindDirection() - widthOfWind && angleFromPlayer < w.getWindDirection() + widthOfWind;
+    }
+
     private void startWalking()
     {
         setWalkVelocity();
@@ -153,8 +186,8 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
         setWalkAnimation();
     }
 
-	private void setWalkVelocity()
-	{
+    private void setWalkVelocity()
+    {
         if (cardinalDirection == 'N')
         {
             Velocity = new Vector2(0, -1);
@@ -237,11 +270,22 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
     {
         isAlert = true;
         Velocity = Vector2.Zero;
-        alertTimer.Start(alertTimerLength);
+        if (isSecondaryFleeing)
+        {
+            alertTimer.Start(secondaryFleeTimerLength);
+        }
+        else
+        {
+            alertTimer.Start(alertTimerLength);
+        }
     }
 
     public char getCardinalDirection()
     {
+        if (isFleeing)
+        {
+            return 'Z';
+        }
         return cardinalDirection;
     }
 

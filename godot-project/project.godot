@@ -17,12 +17,15 @@ config/icon="res://Assets/icon.svg"
 
 [display]
 
-window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [dotnet]
 
 project/assembly_name="Godot Project"
+
+[global_group]
+
+wind="you know, wind"
 
 [input]
 

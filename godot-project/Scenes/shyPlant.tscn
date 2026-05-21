@@ -578,6 +578,9 @@ radius = 115.73245
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pvijt"]
 height = 20.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_pvijt"]
+radius = 234.25842
+
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=2101706176]
 collision_layer = 4
 collision_mask = 0
@@ -590,11 +593,11 @@ sprite_frames = SubResource("SpriteFrames_r7iwo")
 animation = &"run_down"
 frame_progress = 0.20081757
 
-[node name="Area2D" type="Area2D" parent="." unique_id=618233174]
+[node name="StandardDetection" type="Area2D" parent="." unique_id=618233174]
 collision_layer = 0
 collision_mask = 6
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=887934511]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StandardDetection" unique_id=887934511]
 position = Vector2(0, -9)
 shape = SubResource("CircleShape2D_5woow")
 
@@ -607,7 +610,18 @@ one_shot = true
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_pvijt")
 
-[connection signal="body_entered" from="Area2D" to="." method="body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="body_exited"]
+[node name="OlfactoryDetection" type="Area2D" parent="." unique_id=1485525208]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OlfactoryDetection" unique_id=1277396896]
+position = Vector2(2.3841858e-07, -9)
+rotation = -0.015373468
+shape = SubResource("CircleShape2D_pvijt")
+
+[connection signal="body_entered" from="StandardDetection" to="." method="body_entered"]
+[connection signal="body_exited" from="StandardDetection" to="." method="body_exited"]
 [connection signal="timeout" from="AlertTimer" to="." method="alert_timer_timeout"]
 [connection signal="timeout" from="IdleTimer" to="." method="idle_timer_timeout"]
+[connection signal="body_entered" from="OlfactoryDetection" to="." method="on_olfactory_detection_body_entered"]
+[connection signal="body_exited" from="OlfactoryDetection" to="." method="on_olfactory_detection_body_exited"]
