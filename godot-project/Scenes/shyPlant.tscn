@@ -573,13 +573,13 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5woow"]
-radius = 115.73245
+radius = 149.08386
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pvijt"]
 height = 20.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pvijt"]
-radius = 234.25842
+radius = 295.13727
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=2101706176]
 collision_layer = 4

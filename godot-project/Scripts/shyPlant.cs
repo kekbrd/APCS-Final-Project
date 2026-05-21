@@ -21,7 +21,7 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
     private float secondaryFleeTimerLength = 0.3f;
     private Player player;
     private AnimatedSprite2D sprite;
-    public const float shyPlantDetectionRadius = 115.73f;
+    public const float shyPlantDetectionRadius = 149f;
     private Wind w;
     private float widthOfWind = 3f / 8f; // apparently everything defaults to int or double and you have to label all floats
 
