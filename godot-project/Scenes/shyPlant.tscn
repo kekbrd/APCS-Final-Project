@@ -624,3 +624,4 @@ shape = SubResource("CircleShape2D_pvijt")
 [connection signal="timeout" from="AlertTimer" to="." method="alert_timer_timeout"]
 [connection signal="timeout" from="IdleTimer" to="." method="idle_timer_timeout"]
 [connection signal="body_entered" from="OlfactoryDetection" to="." method="on_olfactory_detection_body_entered"]
+[connection signal="body_exited" from="OlfactoryDetection" to="." method="on_olfactory_detection_body_exited"]

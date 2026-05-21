@@ -23,6 +23,10 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="Godot Project"
 
+[global_group]
+
+wind="you know, wind"
+
 [input]
 
 move_up={

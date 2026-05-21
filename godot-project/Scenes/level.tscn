@@ -38,10 +38,4 @@ position = Vector2(51, 183)
 [node name="bigTree2" parent="." unique_id=922223190 instance=ExtResource("7_8c0lf")]
 position = Vector2(147, 124)
 
-[node name="MessageManager" parent="." unique_id=923623458 instance=ExtResource("8_754fn")]
-
-[node name="Plant2" parent="." unique_id=2101706176 instance=ExtResource("2_81xng")]
-position = Vector2(316, 505)
-
-[node name="Plant3" parent="." unique_id=1712372890 instance=ExtResource("2_81xng")]
-position = Vector2(354, 422)
+[node name="UI" parent="." unique_id=923623458 instance=ExtResource("8_754fn")]

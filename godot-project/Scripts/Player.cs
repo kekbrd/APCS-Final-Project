@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 public partial class Player : CharacterBody2D
 {
-	private const float speed = 200; // should be 50 normally, changed for testing
+	private const float speed = 200f; // should be 50 normally, changed for testing
 	private char cardinalDirection;
     private AnimatedSprite2D sprite;
     private Vector2 prevVelocity = Vector2.Zero; 
@@ -19,7 +19,7 @@ public partial class Player : CharacterBody2D
     {
 		cardinalDirection = 'S';
         sprite = GetNode<AnimatedSprite2D>("Sprite");
-        photoRange = shyPlant.shyPlantDetectionRadius + 25;
+        photoRange = shyPlant.shyPlantDetectionRadius + 25f;
     }
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	
@@ -33,7 +33,7 @@ public partial class Player : CharacterBody2D
             {
                 MessageManager.PlayText("You've already taken a good picture. Return to the car before you get mauled, please.");
             }
-            else if (GlobalPosition.DistanceTo(closest.GlobalPosition) > photoRange + 100)
+            else if (GlobalPosition.DistanceTo(closest.GlobalPosition) > photoRange + 100f)
             {
                 MessageManager.PlayText("You're too far away from the target. The boss has pretty bad vision, but I don't think you can pass off that tree as the target.");
             }
