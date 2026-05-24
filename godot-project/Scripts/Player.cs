@@ -11,6 +11,7 @@ public partial class Player : CharacterBody2D
     private AnimatedSprite2D sprite;
     private Vector2 prevVelocity = Vector2.Zero; 
     private Boolean hasPhoto = false;
+    private Boolean isDead = false;
     private String targetSpeciesGroup;
     private float photoRange;
 
@@ -60,7 +61,9 @@ public partial class Player : CharacterBody2D
     public override void _PhysicsProcess(double delta) // PhysicsProcess is used for movement, not Process.
 	{
         Velocity = Vector2.Zero; // Velocity is built in for characterbody, it's a Vector2 which has X and Y values
-        Velocity = Input.GetVector("move_left", "move_right", "move_up", "move_down") * speed; // Got this from AI. Up is negative y, down is positive.
+        if (!isDead)
+        {
+            Velocity = Input.GetVector("move_left", "move_right", "move_up", "move_down") * speed; // Got this from AI. Up is negative y, down is positive.
         if (Velocity != prevVelocity)
         {
             updateCardinalDirection();
@@ -75,6 +78,7 @@ public partial class Player : CharacterBody2D
         }
         prevVelocity = Velocity;
         MoveAndSlide();
+        }
 	}
 
     private bool targetIsFleeing(Node2D n)
@@ -188,6 +192,16 @@ public partial class Player : CharacterBody2D
         {
             sprite.Play("idle_left");
         }
+    }
+
+    public bool getHasPhoto()
+    {
+       return hasPhoto;
+    }
+
+    public bool getIsDead()
+    {
+       return isDead;
     }
 
     public void setTargetSpecies(String g)

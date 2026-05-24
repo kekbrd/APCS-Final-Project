@@ -12,7 +12,7 @@ public partial class Level : Node2D
 	{
 		player = GetNode<Player>("Player");
 		p1 = GetNode<shyPlant>("Plant1"); // The class is whatever the script name is, not node type
-		MessageManager.PlayText("Hey!");
+		MessageManager.PlayText("You've been hired to take a photo of some blue walking plants. Follow the tracks, pay attention to wind direction, take the picture, then get to the car without dying.");
 		player.setTargetSpecies("shyPlantGroup");
 	}
 }

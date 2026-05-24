@@ -100,14 +100,14 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
     {
         if (isIdle())
         {
-            setRandomDirection();
-            startWalking();
+            cardinalDirection = IdleMovement.setRandomDirection();
+            Velocity = IdleMovement.startWalking(cardinalDirection, sprite, walkSpeed);
             await ToSignal(GetTree().CreateTimer(2), "timeout"); /* ToSignal converts to be awaitable, needs the timer object and the name of the 
             timer object's signal that it's done, name must be exact hahaa lost 2 hours on that */
             if (isIdle()) // avoid resetting velocity at inappropriate times
             {
                 Velocity = Vector2.Zero;
-                setIdleAnimation();
+                IdleMovement.setIdleAnimation(sprite, cardinalDirection);
                 idleTimer.Start(r.Next(1, 5));
             }
         }
@@ -152,78 +152,10 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
         return !isFleeing && !isAlert && !isSecondaryFleeing;
     }
 
-    private void setRandomDirection()
-    {
-        int i = r.Next(0, 4); // inclusive and exclusive
-        if (i == 0)
-        {
-            cardinalDirection = 'N';
-        }
-        else if (i == 1)
-        {
-            cardinalDirection = 'E';
-        }
-        else if (i == 2)
-        {
-            cardinalDirection = 'S';
-        }
-        else
-        {
-            cardinalDirection = 'W';
-        }
-    }
-
     private bool playerIsUpwind() // angletopoint is not around radians, its the weird godot thing
     {
         float angleFromPlayer = nodeInOlfactoryRange.GlobalPosition.AngleToPoint(GlobalPosition);
         return angleFromPlayer > w.getWindDirection() - widthOfWind && angleFromPlayer < w.getWindDirection() + widthOfWind;
-    }
-
-    private void startWalking()
-    {
-        setWalkVelocity();
-        Velocity *= walkSpeed;
-        setWalkAnimation();
-    }
-
-    private void setWalkVelocity()
-    {
-        if (cardinalDirection == 'N')
-        {
-            Velocity = new Vector2(0, -1);
-        }
-        else if (cardinalDirection == 'E')
-        {
-            Velocity = new Vector2(1, 0);
-        }
-        else if (cardinalDirection == 'S')
-        {
-            Velocity = new Vector2(0, 1);
-        }
-        else
-        {
-            Velocity = new Vector2(-1, 0);
-        }
-    }
-
-    private void setWalkAnimation()
-    {
-        if ((Velocity.Angle() < (-1 * Mathf.Pi / 4)) && (Velocity.Angle() > (-3 * Mathf.Pi / 4)))
-        {
-            sprite.Play("walk_up");
-        }
-        else if ((Velocity.Angle() <= (Mathf.Pi / 4)) && (Velocity.Angle() >= (-1 * Mathf.Pi / 4)))
-        {
-            sprite.Play("walk_right");
-        }
-        else if ((Velocity.Angle() > (Mathf.Pi / 4)) && (Velocity.Angle() < (3 * Mathf.Pi / 4)))
-        {
-            sprite.Play("walk_down");
-        }
-        else
-        {
-            sprite.Play("walk_left");
-        }
     }
 
     private void setRunAnimation() // Angles have positive clockwise, from 0 to pi, left is pi or -pi
@@ -243,26 +175,6 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
         else
         {
             sprite.Play("run_left");
-        }
-    }
-
-    private void setIdleAnimation()
-    {
-        if (cardinalDirection == 'N')
-        {
-            sprite.Play("idle_up");
-        }
-        else if (cardinalDirection == 'E')
-        {
-            sprite.Play("idle_right");
-        }
-        else if (cardinalDirection == 'S')
-        {
-            sprite.Play("idle_down");
-        }
-        else
-        {
-            sprite.Play("idle_left");
         }
     }
 
