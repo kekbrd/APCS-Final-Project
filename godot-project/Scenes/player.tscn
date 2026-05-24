@@ -1,7 +1,12 @@
 [gd_scene format=3 uid="uid://d4cesphm5r01u"]
 
 [ext_resource type="Script" uid="uid://0u6y7ftgiq1t" path="res://Scripts/Player.cs" id="1_cvnsp"]
+[ext_resource type="Texture2D" uid="uid://cayj6jnp13xcy" path="res://Assets/PNG/Objects_separetely/Bones_shadow2_8.png" id="2_6t5aa"]
 [ext_resource type="Texture2D" uid="uid://cju8eir8d5vvl" path="res://Assets/kalos_breeder__m__by_aveontrainer_dgvw9yk.png" id="2_cvnsp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bi64h"]
+atlas = ExtResource("2_6t5aa")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6t5aa"]
 atlas = ExtResource("2_cvnsp")
@@ -85,6 +90,14 @@ region = Rect2(96, 144, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cvnsp"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bi64h")
+}],
+"loop": true,
+"name": &"die",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6t5aa")
@@ -198,7 +211,7 @@ script = ExtResource("1_cvnsp")
 position = Vector2(2.2737368e-13, -6.9999995)
 scale = Vector2(0.62499994, 0.6041667)
 sprite_frames = SubResource("SpriteFrames_cvnsp")
-animation = &"idle_down"
+animation = &"die"
 autoplay = "idle_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1788518584]

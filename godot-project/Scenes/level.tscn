@@ -41,6 +41,5 @@ position = Vector2(147, 124)
 
 [node name="UI" parent="." unique_id=923623458 instance=ExtResource("8_754fn")]
 
-[node name="CharacterBody2D" parent="." unique_id=1509786839 instance=ExtResource("9_bvt00")]
-position = Vector2(54, 363)
-script = null
+[node name="Troll1" parent="." unique_id=1509786839 instance=ExtResource("9_bvt00")]
+position = Vector2(-95, 298)

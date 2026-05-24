@@ -11,7 +11,7 @@ public partial class Player : CharacterBody2D
     private AnimatedSprite2D sprite;
     private Vector2 prevVelocity = Vector2.Zero; 
     private Boolean hasPhoto = false;
-    private Boolean isDead = false;
+    private Boolean isAlive = true;
     private String targetSpeciesGroup;
     private float photoRange;
 
@@ -30,7 +30,7 @@ public partial class Player : CharacterBody2D
         {
             Node2D closest = closestNode2DInGroup(targetSpeciesGroup);
 
-            if (isDead)
+            if (!isAlive)
             {
                 // nothing happens
             }
@@ -65,7 +65,7 @@ public partial class Player : CharacterBody2D
     public override void _PhysicsProcess(double delta) // PhysicsProcess is used for movement, not Process.
 	{
         Velocity = Vector2.Zero; // Velocity is built in for characterbody, it's a Vector2 which has X and Y values
-        if (!isDead)
+        if (isAlive)
         {
             Velocity = Input.GetVector("move_left", "move_right", "move_up", "move_down") * speed; // Got this from AI. Up is negative y, down is positive.
         if (Velocity != prevVelocity)
@@ -82,6 +82,11 @@ public partial class Player : CharacterBody2D
         }
         prevVelocity = Velocity;
         MoveAndSlide();
+        }
+        else
+        {
+            sprite.Play("die");
+            sprite.Scale = new Vector2(0.5f, 0.5f);
         }
 	}
 
@@ -203,9 +208,14 @@ public partial class Player : CharacterBody2D
        return hasPhoto;
     }
 
-    public bool getIsDead()
+    public bool getIsAlive()
     {
-       return isDead;
+       return isAlive;
+    }
+
+    public void setIsAlive(bool b)
+    {
+        isAlive = b;
     }
 
     public void setTargetSpecies(String g)
