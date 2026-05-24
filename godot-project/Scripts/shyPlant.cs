@@ -4,25 +4,31 @@ using System.Threading;
 
 public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
 {
+    public const float shyPlantDetectionRadius = 149f;
+    
     private char cardinalDirection;
+
     private const float walkSpeed = 20f;
     private const float runSpeed = 200f;
+    private Vector2 secondaryFleeVelocity;
+
     private Boolean playerInRange = false;
-    private Boolean playerInOlfactoryRange = false;
-    private Node2D nodeInOlfactoryRange;
     private Boolean isFleeing = false;
     private Boolean isSecondaryFleeing = false;
-    private Vector2 secondaryFleeVelocity;
     private Boolean isAlert = false;
-    private Random r = new Random();
+    private Boolean playerInOlfactoryRange = false;
+    
     private Godot.Timer idleTimer;
     private Godot.Timer alertTimer;
     private float alertTimerLength = 1f;
     private float secondaryFleeTimerLength = 0.3f;
+    
+    private Random r = new Random();
     private Player player;
     private AnimatedSprite2D sprite;
-    public const float shyPlantDetectionRadius = 149f;
     private Wind w;
+    
+    private Node2D nodeInOlfactoryRange;
     private float widthOfWind = 3f / 8f; // apparently everything defaults to int or double and you have to label all floats
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
