@@ -64,6 +64,7 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
             }
         }
     }
+    
     private void body_exited(Node2D body)
     {
         if (body is Player)

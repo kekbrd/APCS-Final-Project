@@ -30,7 +30,11 @@ public partial class Player : CharacterBody2D
         {
             Node2D closest = closestNode2DInGroup(targetSpeciesGroup);
 
-            if (hasPhoto)
+            if (isDead)
+            {
+                // nothing happens
+            }
+            else if (hasPhoto)
             {
                 MessageManager.PlayText("You've already taken a good picture. Return to the car before you get mauled, please.");
             }
