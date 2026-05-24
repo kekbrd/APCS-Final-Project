@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cybkpewl303b1" path="res://Scenes/EnvironmentScenes/mediumTree.tscn" id="6_0f350"]
 [ext_resource type="PackedScene" uid="uid://ni25semtra4g" path="res://Scenes/EnvironmentScenes/big_tree.tscn" id="7_8c0lf"]
 [ext_resource type="PackedScene" uid="uid://xgh7bwhkove3" path="res://Scenes/UI.tscn" id="8_754fn"]
+[ext_resource type="PackedScene" uid="uid://chb5kl3iheipl" path="res://Scenes/Troll.tscn" id="9_bvt00"]
 
 [node name="Level" type="Node2D" unique_id=1367735834]
 y_sort_enabled = true
@@ -39,3 +40,7 @@ position = Vector2(51, 183)
 position = Vector2(147, 124)
 
 [node name="UI" parent="." unique_id=923623458 instance=ExtResource("8_754fn")]
+
+[node name="CharacterBody2D" parent="." unique_id=1509786839 instance=ExtResource("9_bvt00")]
+position = Vector2(54, 363)
+script = null
