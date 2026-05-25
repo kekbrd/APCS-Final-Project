@@ -130,6 +130,11 @@ animations = [{
 "name": &"idle_up",
 "speed": 5.0
 }, {
+"frames": [],
+"loop": true,
+"name": &"nothing",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3smsa")
@@ -211,7 +216,7 @@ script = ExtResource("1_cvnsp")
 position = Vector2(2.2737368e-13, -6.9999995)
 scale = Vector2(0.62499994, 0.6041667)
 sprite_frames = SubResource("SpriteFrames_cvnsp")
-animation = &"die"
+animation = &"idle_up"
 autoplay = "idle_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1788518584]

@@ -12,6 +12,7 @@ public partial class Player : CharacterBody2D
     private Vector2 prevVelocity = Vector2.Zero; 
     private Boolean hasPhoto = false;
     private Boolean isAlive = true;
+    private Boolean isVisible = true;
     private String targetSpeciesGroup;
     private float photoRange;
 
@@ -30,7 +31,7 @@ public partial class Player : CharacterBody2D
         {
             Node2D closest = closestNode2DInGroup(targetSpeciesGroup);
 
-            if (!isAlive)
+            if (!isAlive || !isVisible)
             {
                 // nothing happens
             }
@@ -55,9 +56,13 @@ public partial class Player : CharacterBody2D
                 hasPhoto = true;
                 MessageManager.PlayText("Nice! Got the photo.");
             }
-            else
+            else if (!correctAngleForPhoto(closest))
             {
                 MessageManager.PlayText("Come on, pick a more flattering angle.");
+            }
+            else
+            {
+                GD.Print("Taking photo has resulted in unexpected error.");
             }
         }
     }
@@ -65,25 +70,29 @@ public partial class Player : CharacterBody2D
     public override void _PhysicsProcess(double delta) // PhysicsProcess is used for movement, not Process.
 	{
         Velocity = Vector2.Zero; // Velocity is built in for characterbody, it's a Vector2 which has X and Y values
-        if (isAlive)
+        if (!isVisible)
         {
-            Velocity = Input.GetVector("move_left", "move_right", "move_up", "move_down") * speed; // Got this from AI. Up is negative y, down is positive.
-        if (Velocity != prevVelocity)
+            sprite.Play("nothing");
+        }
+        if (isAlive && isVisible)
         {
-            updateCardinalDirection();
+            Velocity = Input.GetVector("move_left", "move_right", "move_up", "move_down") * speed; // Got this line from AI. Up is negative y, down is positive.
+            if (Velocity != prevVelocity)
+            {
+                updateCardinalDirection();
+            }
+            if (Velocity == Vector2.Zero)
+            {
+                setIdleAnimation();
+            }   
+            else
+            {
+                setWalkAnimation();
+            }
+            prevVelocity = Velocity;
+            MoveAndSlide();
         }
-        if (Velocity == Vector2.Zero)
-        {
-            setIdleAnimation();
-        }
-        else
-        {
-            setWalkAnimation();
-        }
-        prevVelocity = Velocity;
-        MoveAndSlide();
-        }
-        else
+        else if (!isAlive)
         {
             sprite.Play("die");
             sprite.Scale = new Vector2(0.5f, 0.5f);
@@ -221,5 +230,15 @@ public partial class Player : CharacterBody2D
     public void setTargetSpecies(String g)
     {
         targetSpeciesGroup = g;
+    }
+
+    public void setIsVisible(bool b)
+    {
+        isVisible = b;
+    }
+
+    public bool getIsVisible()
+    {
+        return isVisible;
     }
 }

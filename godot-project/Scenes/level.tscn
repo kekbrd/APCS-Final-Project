@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ni25semtra4g" path="res://Scenes/EnvironmentScenes/big_tree.tscn" id="7_8c0lf"]
 [ext_resource type="PackedScene" uid="uid://xgh7bwhkove3" path="res://Scenes/UI.tscn" id="8_754fn"]
 [ext_resource type="PackedScene" uid="uid://chb5kl3iheipl" path="res://Scenes/Troll.tscn" id="9_bvt00"]
+[ext_resource type="PackedScene" uid="uid://ceeyt34uyt54n" path="res://Scenes/Car.tscn" id="10_oqgf2"]
 
 [node name="Level" type="Node2D" unique_id=1367735834]
 y_sort_enabled = true
@@ -43,3 +44,12 @@ position = Vector2(147, 124)
 
 [node name="Troll1" parent="." unique_id=1509786839 instance=ExtResource("9_bvt00")]
 position = Vector2(-95, 298)
+
+[node name="CharacterBody2D" parent="." unique_id=2101706176 instance=ExtResource("2_81xng")]
+position = Vector2(331, 428)
+
+[node name="CharacterBody2D2" parent="." unique_id=1754693650 instance=ExtResource("2_81xng")]
+position = Vector2(462, 516)
+
+[node name="StaticBody2D" parent="." unique_id=786278016 instance=ExtResource("10_oqgf2")]
+position = Vector2(132, 16)

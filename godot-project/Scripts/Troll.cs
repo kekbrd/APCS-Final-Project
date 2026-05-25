@@ -32,14 +32,21 @@ public partial class Troll : CharacterBody2D
 			isAwake = true;
 			idleTimer.Start();
 		}
+
 		if (isChasing && player.getIsAlive())
 		{
 			Velocity = (player.GlobalPosition - GlobalPosition).Normalized();
 			Velocity *= runSpeed;
 			setRunAnimation();
 		}
+
+		if (!isAwake)
+		{
+			Velocity = Vector2.Zero;
+		}
+
 		MoveAndSlide();
-		if (GetSlideCollisionCount() > 0)
+		if (player.getHasPhoto() && GetSlideCollisionCount() > 0)
 		{
 			for (int i = 0; i < GetSlideCollisionCount(); i++)
 			{
