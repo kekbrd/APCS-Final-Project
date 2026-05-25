@@ -74,11 +74,6 @@ animations = [{
 "loop": true,
 "name": &"idle_left",
 "speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"nothing",
-"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e1atf"]
@@ -97,7 +92,7 @@ script = ExtResource("1_jbim0")
 position = Vector2(1.9073486e-06, -8)
 scale = Vector2(0.1139915, 0.12403014)
 sprite_frames = SubResource("SpriteFrames_ci6hu")
-animation = &"idle_left"
+animation = &"explode"
 autoplay = "idle_left"
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1094277473]

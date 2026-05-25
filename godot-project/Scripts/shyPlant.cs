@@ -54,11 +54,10 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
         }
         if (body.IsInGroup("preySpecies"))
         {
-            shyPlant plant = (shyPlant)body;
+            shyPlant plant = (shyPlant)body; // not ideal because not universal, but there's only plants so it's ok.
             if (plant.getIsFleeing() && isIdle())
             {
                 isSecondaryFleeing = true;
-                isAlert = true;
                 secondaryFleeVelocity = plant.Velocity.Normalized();
                 startFleeSequence();
             }
@@ -77,7 +76,6 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
             if (plant.getIsFleeing() && isIdle())
             {
                 isSecondaryFleeing = true;
-                isAlert = true;
                 secondaryFleeTimerLength = 0; // compensate for knowing only when it exits
                 secondaryFleeVelocity = plant.Velocity.Normalized();
                 startFleeSequence();
@@ -110,7 +108,7 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
             cardinalDirection = IdleMovement.setRandomDirection();
             Velocity = IdleMovement.startWalking(cardinalDirection, sprite, walkSpeed);
             await ToSignal(GetTree().CreateTimer(2), "timeout"); /* ToSignal converts to be awaitable, needs the timer object and the name of the 
-            timer object's signal that it's done, name must be exact hahaa lost 2 hours on that */
+            timer object's signal that it's done, name must be exact */
             if (isIdle()) // avoid resetting velocity at inappropriate times
             {
                 Velocity = Vector2.Zero;
@@ -193,9 +191,13 @@ public partial class shyPlant : CharacterBody2D, IHasCardinalDirection
         {
             alertTimer.Start(secondaryFleeTimerLength);
         }
-        else
+        else if (!isSecondaryFleeing)
         {
             alertTimer.Start(alertTimerLength);
+        }
+        else
+        {
+            GD.Print("Error in start flee sequence shyPlant");
         }
     }
 
