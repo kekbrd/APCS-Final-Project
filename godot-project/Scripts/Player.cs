@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 public partial class Player : CharacterBody2D
 {
-	private const float speed = 200f; // should be 50 normally, changed for testing
+	private const float speed = 60f; // should be 60 normally
 	private char cardinalDirection;
     private AnimatedSprite2D sprite;
     private Vector2 prevVelocity = Vector2.Zero; 
