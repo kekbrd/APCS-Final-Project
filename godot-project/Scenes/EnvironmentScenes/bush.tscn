@@ -1,22 +1,21 @@
-[gd_scene format=3 uid="uid://bpulrvyt2gnw4"]
+[gd_scene format=3 uid="uid://n8bwg06igyoh"]
 
-[ext_resource type="Texture2D" uid="uid://jacc3h6wqico" path="res://Assets/PNG/Objects.png" id="1_cxwyc"]
+[ext_resource type="Texture2D" uid="uid://jacc3h6wqico" path="res://Assets/PNG/Objects.png" id="1_ao52k"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l8mll"]
-radius = 7.0
-height = 14.0
+height = 22.0
 
-[node name="smallTree" type="Node2D" unique_id=1239454870]
+[node name="smallSnowTree" type="Node2D" unique_id=1239454870]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=673244939]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1309248845]
-position = Vector2(3, 2)
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_l8mll")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=176042630]
-position = Vector2(7.9999995, -16)
+position = Vector2(3.0000005, -18)
 scale = Vector2(0.78571427, 0.7222222)
-texture = ExtResource("1_cxwyc")
+texture = ExtResource("1_ao52k")
 region_enabled = true
-region_rect = Rect2(456, 480, 56, 72)
+region_rect = Rect2(116.25127, 318.11008, 104.497635, 99.36606)
