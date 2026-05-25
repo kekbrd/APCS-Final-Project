@@ -72,7 +72,7 @@ public partial class Player : CharacterBody2D
         Velocity = Vector2.Zero; // Velocity is built in for characterbody, it's a Vector2 which has X and Y values
         if (!isVisible)
         {
-            sprite.Stop();
+            sprite.Visible = false; // 
         }
         if (isAlive && isVisible)
         {

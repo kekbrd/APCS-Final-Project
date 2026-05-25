@@ -89,7 +89,7 @@ public partial class Troll : CharacterBody2D
             {
                 Velocity = Vector2.Zero;
                 IdleMovement.setIdleAnimation(sprite, cardinalDirection);
-                idleTimer.Start(r.Next(3, 7));
+                idleTimer.Start(r.Next(3, 5));
 		    }
 		}
 	}

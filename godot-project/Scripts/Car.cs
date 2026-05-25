@@ -1,6 +1,8 @@
 using Game.UI;
 using Godot;
+using GodotPlugins.Game;
 using System;
+using System.ComponentModel;
 
 public partial class Car : StaticBody2D
 {
@@ -8,11 +10,13 @@ public partial class Car : StaticBody2D
 	private AnimatedSprite2D sprite;
 	private bool containsPlayer = false;
 	private int numFailedEntry = 0;
+	private NinePatchRect winText;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		sprite = GetNode<AnimatedSprite2D>("Sprite");
 		player = GetTree().GetFirstNodeInGroup("player") as Player;
+		winText = GetTree().GetFirstNodeInGroup("winText") as NinePatchRect; // not ideal but it would take another few days to learn the other way.
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -20,7 +24,7 @@ public partial class Car : StaticBody2D
 	{
 	}
 
-	private void on_area_2d_body_entered(Node2D body)
+	private async void on_area_2d_body_entered(Node2D body)
 	{
 		if (body is Player)
 		{
@@ -29,7 +33,8 @@ public partial class Car : StaticBody2D
 			{
 				containsPlayer = true;
 				player.setIsVisible(false);
-				//win
+				winText.Visible = true;
+				GetTree().Paused = true;
 			}
 			else if (numFailedEntry == 1)
 			{

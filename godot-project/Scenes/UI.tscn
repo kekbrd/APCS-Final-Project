@@ -129,3 +129,22 @@ animation = &"wind"
 autoplay = "wind"
 frame_progress = 0.5410899
 script = ExtResource("13_g0pbe")
+
+[node name="NinePatchRect5" type="NinePatchRect" parent="Control" unique_id=628188367 groups=["winText"]]
+visible = false
+layout_mode = 0
+offset_left = 424.0
+offset_top = 256.0
+offset_right = 720.0
+offset_bottom = 376.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/NinePatchRect5" unique_id=575201589]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 3.0
+offset_right = 296.0
+offset_bottom = 104.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_7jj17")
+theme_override_font_sizes/normal_font_size = 100
+text = "YOU WIN!"

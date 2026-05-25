@@ -27,6 +27,7 @@ project/assembly_name="Godot Project"
 [global_group]
 
 wind="you know, wind"
+winText=""
 
 [input]
 
